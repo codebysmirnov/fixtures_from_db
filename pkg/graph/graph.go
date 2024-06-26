@@ -1,10 +1,5 @@
 package graph
 
-import (
-	"fmt"
-	"strings"
-)
-
 // Graph представляет граф с узлами и ребрами.
 type Graph[K comparable] struct {
 	nodes map[K]*Node[K]
@@ -67,15 +62,8 @@ func (g *Graph[K]) TopSort() ([]K, error) {
 func (g *Graph[K]) visit(key K, sortedNodes *orderedSet[K], visitedNodes *orderedSet[K]) error {
 	added := visitedNodes.Add(key)
 	if !added {
-		index := visitedNodes.Index(key)
-		cycle := append(visitedNodes.items[index:], key)
-		strs := make([]string, len(cycle))
-		for i, k := range cycle {
-			strs[i] = fmt.Sprintf("%v", k)
-		}
-		return fmt.Errorf("visit loop error: %s", strings.Join(strs, " -> "))
+		return nil
 	}
-
 	n := g.nodes[key]
 	for _, edge := range n.Edges() {
 		if !sortedNodes.Contains(edge) {

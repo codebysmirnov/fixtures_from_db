@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	maxRowsGenCount      = 5
+	maxRowsGenCount      = 1
 	maxDefaultTextLength = 500
 	openingParenthesis   = '('
 	closingParenthesis   = ')'
@@ -135,8 +135,8 @@ func ToSQL(tableName string, columnsInfo []database.ColumnInfo) string {
 }
 
 const (
-	maxDefaultNumericPrecision = 131072
-	maxDefaultNumericScale     = 16383
+	maxDefaultNumericPrecision = 5
+	maxDefaultNumericScale     = 2
 )
 
 // generateDefaultNumeric генерирует случайное число с максимальной точностью по умолчанию
