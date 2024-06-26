@@ -1,0 +1,70 @@
+tables:
+  user:
+    id:
+      type: uuid
+    name:
+      type: string
+      ruleset:
+        nullable: false
+        length:
+          min: 1    # от 1 символа (по умолчанию от 0)
+          max: 100  # до 100 символов (по умолчанию до 255)
+        prefix: "user_"  # префикс, например user_СГЕНЕРИРОВАНО
+        postfix: "_name" # постфик, например СГЕНЕРИРОВАНО_name
+        no_duplicate_characters: false # не должно быть повторяющихся символов
+        no_sequential_characters: 5    # не должно быть 5 последовательных символов
+        include_charset: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" # используемый алфавит
+        exclude_charset: "0123456789"                                           # исключается из алфавита
+    role:
+      type: string # enum
+      ruleset:
+        nullable: false
+        values:
+          - admin
+          - user
+          - guest
+    money:
+      type: decimal
+      ruleset:
+        nullable: false
+        range:
+          min: 1.1
+          max: 25.0
+        precision: 2
+        scale: 2
+    meta: # TODO
+      type: json
+      ruleset:
+        nullable: false
+        type: object # может быть array
+        properties:
+          name:
+            type: string
+            nullable: false
+          value:
+            type: string
+            nullable: false
+    created_at:
+      type: timestampz
+      ruleset:
+        nullable: false
+        period:
+          from: 2020-01-01 00:00:00 # от 2020-01-01 00:00:00 включительно
+          to: 2020-12-31 23:59:59   # до 2020-12-31 23:59:59 включительно
+    deleted_at:
+      type: timestampz
+      ruleset:
+        nullable: true
+        period:
+          from: created_at          # от created_at включительно
+          to: 2020-12-31 23:59:59   # до 2020-12-31 23:59:59 включительно
+
+  employee:
+    user_id:
+      type: uuid
+      reference:
+        table: user
+        column: id # employee зависит от user, то есть фикстура генерируется после user
+tables_order:
+  - user
+  - employee
