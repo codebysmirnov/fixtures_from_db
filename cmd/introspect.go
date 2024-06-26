@@ -69,6 +69,7 @@ var IntrospectCmd = &cobra.Command{
 					RuleSet: config.RuleSet{
 						Nullable: !columnInfo.IsPrimaryKey || !columnInfo.IsNotNull,
 						Unique:   columnInfo.IsPrimaryKey,
+						Values:   columnInfo.Values,
 					},
 				}
 				if columnInfo.IsForeignKey && columnInfo.ForeignTable != nil && columnInfo.ForeignColumnName != nil {
