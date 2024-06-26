@@ -22,6 +22,27 @@ user:
         - admin
         - user
         - guest
+  money:
+    type: decimal
+    ruleset:
+      nullable: false
+      range:
+        min: 1.1
+        max: 25.0
+      precision: 2
+      scale: 2
+  meta: # TODO
+    type: json
+    ruleset:
+      nullable: false
+      type: object # может быть array
+      properties:
+        name:
+          type: string
+          nullable: false
+        value:
+          type: string
+          nullable: false
   created_at:
     type: timestampz
     ruleset:
@@ -36,3 +57,8 @@ user:
       period:
         from: created_at          # от created_at включительно
         to: 2020-12-31 23:59:59   # до 2020-12-31 23:59:59 включительно
+
+employee:
+  user_id:
+    type: uuid
+    reference: user.id # employee зависит от user, то есть фикстура генерируется после user
